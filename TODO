@@ -1,0 +1,50 @@
+HIPRI
+=====
+
+- New model
+
+    a=b
+    c=a*2
+
+    all = makes it part of combo block
+    P(c) -> prev value of c 
+
+    prev_c <= c
+- multiline comment was causing trouble in plp/examples/proc_calls
+- warn of non-blocking assignments in sm block
+
+- empty statement handling
+
+- add support for:
+
+   - case
+   - forever
+   - repeat
+
+- task invocation / composition
+   . inline tasks?
+   . generate a separate FSM that can be invoked?
+
+MIDRI
+=====
+
+- merge consecutinve sn's into one
+- `line directive to improve errors
+
+
+LOWRI
+=====
+
+- define options next to the sm
+   . encoding (enum, pwropt, onehot)
+   . clk name
+   . reset name
+
+   SmBegin(clk=clk, reset=~rst_n:)  level:, default edge
+
+- fix syntax highlighting
+- maybe a prefix for SmBegin
+- paper
+- full design
+- a way to name states
+- propper parsing of declarations
