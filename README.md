@@ -5,17 +5,17 @@ Make algorithmic (behavrioal) style Verilog synthesizable with full control of c
 1. INTRODUCTION
 
 
- This tool is capable of generating a synthesizable verilog FSM based on a 
- behavioral description in verilog of the functionality. The input is 
- verilog design file where the following state machine declaration has been
- inserted and will be replaced by the generated verilog
+This tool is capable of generating a synthesizable verilog FSM based on a  
+behavioral description in verilog of the functionality. The input is 
+verilog design file where the following state machine declaration has been
+inserted and will be replaced by the generated verilog
  
-   sm_decl :=
-     'SmBegin'
-        decl+
-     'SmForever'
-      ...
-     'SmEnd'
+    sm_decl :=
+        'SmBegin'
+             decl+
+        'SmForever'
+             ...
+        'SmEnd'
 
 In what follows we use EBNF notation for the rest of the syntax elements, Ie.
     'terminal'       Represents a terminal expected without the quotes
