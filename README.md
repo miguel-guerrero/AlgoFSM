@@ -3,27 +3,27 @@ Make algorithmic (behavrioal) style Verilog synthesizable with full control of c
 
 
 1. INTRODUCTION
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
  This tool is capable of generating a synthesizable verilog FSM based on a 
  behavioral description in verilog of the functionality. The input is 
  verilog design file where the following state machine declaration has been
  inserted and will be replaced by the generated verilog
  
- sm_decl :=
-    'SmBegin'
-       decl+
-    'SmForever'
-    ...
-    'SmEnd'
+   sm_decl :=
+     'SmBegin'
+        decl+
+     'SmForever'
+      ...
+     'SmEnd'
 
 In what follows we use EBNF notation for the rest of the syntax elements, Ie.
-   'terminal'       Represents a terminal expected without the quotes
-   :=               Defines a non-terminal
-   []               Indicate enclosing items are optional
-   +                One or more repetitions
-   item1 item2      Indicates sequencing of items (terminal or not)
-   |                Indicates alternatives
+    'terminal'       Represents a terminal expected without the quotes
+    :=               Defines a non-terminal
+    []               Indicate enclosing items are optional
+    +                One or more repetitions
+    item1 item2      Indicates sequencing of items (terminal or not)
+    |                Indicates alternatives
  
  The body of each section (represented as ...) is written in verilog.
  Single line comments // style are allowed
@@ -31,11 +31,11 @@ In what follows we use EBNF notation for the rest of the syntax elements, Ie.
  declaration section is used to add 'reg' type of variable definitions 
  that can be used on the main functional loop. The syntax for each entry is
 
-  decl := ['local'] ['reg'] [width_decl] var_name ['=' initial_value] ';'
+    decl := ['local'] ['reg'] [width_decl] var_name ['=' initial_value] ';'
 
-  width_decl := /*empty*/ | '[' integer_expr ':' integer_expr ']'
+    width_decl := /*empty*/ | '[' integer_expr ':' integer_expr ']'
 
-  varname := VERILOG_IDENTIFIER
+    varname := VERILOG_IDENTIFIER
  
    - if 'local' is specified, the declaration is local to the block generated
    - 'local reg' is equivalent to local
@@ -66,7 +66,7 @@ In what follows we use EBNF notation for the rest of the syntax elements, Ie.
 
 
 2. DEPENDENCIES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 The tool is written in python3 and tested in MacOs/Linux. Uses only the 
 standard python library. Few tools are assumed to be present in order to
@@ -77,8 +77,8 @@ iverilog   - verilog simulator which is used also as verilog pre-processor
     MacOS:  brew install icarus-verilog
     Ubuntu: sudo apt-get install iverilog
 
-    if another tools is used as a preprocessor (expand macros `ifdefs etc.
-    on the verilog source file) please modify vlog_prep.sh accordingly
+  if another tools is used as a preprocessor (expand macros `ifdefs etc.
+  on the verilog source file) please modify vlog_prep.sh accordingly
 
 optional: gtkwave (waveform viewer, used only for design debug)
 
@@ -87,18 +87,17 @@ optional: gtkwave (waveform viewer, used only for design debug)
 
 optional: yosys (code synthesizer)
 
-    We use yosys to ensure generated code from FSM (RTL style) is synthesizable.
-    To check this, Makefiles have a target ('gls') that when invoked will run
-    RTL simulation, synthesis through yosys into low level equations (no target
-    library), Then we run simulation of this representation, and a comparison 
-    that the output of both runs for a match (RTL run vs. lower level / gls style)
+  We use yosys to ensure generated code from FSM (RTL style) is synthesizable.
+  To check this, Makefiles have a target ('gls') that when invoked will run
+  RTL simulation, synthesis through yosys into low level equations (no target
+  library), Then we run simulation of this representation, and a comparison 
+  that the output of both runs for a match (RTL run vs. lower level / gls style)
 
     MacOS:  brew install yosys
     Ubuntu: sudo apt-get install yosys
 
 
 3. GETTING STARTED
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Few examples are given under tests/ directory. The file design.v on each of
 them contains a verilog module where at least one SmBeing/SmEnd is included.
@@ -138,7 +137,7 @@ Under each test/<testname> directory:
 
 
 4. CONTROL
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
  The tool provides command line options to define reset name, polarity and
  whether is synchronous or asynchronous with the -rst option.
@@ -217,7 +216,7 @@ Under each test/<testname> directory:
 
 
 5. DESCRIPTION OF TESTS DIRECTORY
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 Description of the files under tests/<testname>/ directory
 All the tests provided follow the same naming convention to allow reusing
@@ -257,12 +256,12 @@ Generated files:
 
 
 6. CONTACT
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
  Please report any bugs along with an input sample file the helps to reproduce 
  the bug and command line used to allow its reproduction to:
 
     miguel.a.guerrero@gmail.com
 
- and include "AlgoFSM" on the subject line. Suggestions for improvement are most 
+ and include "algo_fsm" on the subject line. Suggestions for improvement are most 
  welcomed.
