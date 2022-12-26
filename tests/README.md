@@ -20,7 +20,7 @@
 * **`test_seq2`**: Similar to `test_seq1` with 2 nested while loops.
 
 * **`tpg1`**: video test pattern generator, generates syncs and pixels contents
-* **`tpg2`**: as above small variation of the timing of the y incfrement
+* **`tpg2`**: as above small variation of the timing of the y increment
 * **`tpg3`**: as above but using a couple of nested for loops instead of do/while's.
 
 
