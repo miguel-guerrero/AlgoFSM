@@ -106,8 +106,9 @@ Under each test/<testname> directory:
              `SmForever/SmEnd` without tool transformations, hence ideal to
              iterate on it until the desired behavior is obtained.
  
- `out_sm.v` :  FSM style generated code. Equivalent to out_beh.v but is also 
-             synthesizable (1 block type)
+ `out_sm.v` :  FSM style generated code. Equivalent to `out_beh.v` but is also 
+             synthesizable. The style of this FSM is not very conventional but
+             is synthesizable.
  
  Note that a clock event (wait for clock edge) is represented with the macro
 
@@ -153,18 +154,18 @@ Under each test/<testname> directory:
 
  An **enable** signal per state machine generated can also be created, so that
  state advances are gated by it. If a signal name is provided with **-ena** option
- e.g. `"-ena sm_enable"` then a signal like `sm_emable0` (where is the instance or
+ e.g. `"-ena sm_enable"` then a signal like `sm_emable0` (where 0 is the instance or
  id number of the sm generated on present file) will be generated to control the advance of the FSM and the user can assing to it the desired logic.
  
  Other options are available to control the name of the following items:
 
-* FSM state variable : `-state s`
-* Generated block name seed : `-name s`
-* Prefix for state constants : `-prefix s`
+* FSM state variable : `-state <string>`
+* Generated block name seed : `-name <string>`
+* Prefix for state constants : `-prefix <string>`
 
  For a description of all the options do: 
 
-      $> algo_fsm.py -help
+      $ algo_fsm.py -help
 
 
  The output is FSM style by default. To produce behavioral code with a 
@@ -234,7 +235,7 @@ these tests.
     * `tb.sm.vcd`: signal dump of running the simulation of `tb.v` and `design_out.sm.v`
 
   * Gate Level
-    * syn.log: synthesis log (running `yosys` synthesizer over `design_out.sm.v`)
+    * `syn.log`: synthesis log (running `yosys` synthesizer over `design_out.sm.v`)
     * `design_out.sm.vg`: synthesis result (running `yosys` synthesizer over `design_out.sm.v`). We don't target any specific library. this just contains low level equations akin to a gate level netlist
     * sim.gls.log: simulation log of running the simulation of `tb.v` and `design_out.sm.vg`
     * `tb.gls.vcd`: signal dump of running the simulation of `tb.v` and `design_out.sm.vg`
@@ -244,12 +245,11 @@ these tests.
 
 ## 6. CONTACT
 
-
  Please report any bugs along with an input sample file the helps to reproduce 
  the bug and command line used to allow its reproduction to:
 
     miguel.a.guerrero@gmail.com
 
- and include `algo_fsm` on the subject line. Suggestions for improvement are most 
+ And include `algo_fsm` on the subject line. Suggestions for improvement are most 
  welcome.
 
