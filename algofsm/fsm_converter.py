@@ -28,7 +28,7 @@ class FsmConverter:
         self.reg_track_init = {}
 
     # gather some information to build the output FSM
-    def extract_initial(self, txt):
+    def extract_initial(self, txt, line_decl_base):
         def get_width_var(width, var):
             m = re.search(r"(\[.*\])\s*(.*)", var)
             if m:
@@ -40,7 +40,9 @@ class FsmConverter:
 
         curr = self.args.state_suffix
         sd = self.args.sd
+        line_no = line_decl_base
         for line in txt.split("\n"):
+            line_no += 1
             line = line.replace(";", "")  # TODO
             line = line.rstrip()
 
@@ -48,10 +50,11 @@ class FsmConverter:
                 init_assings = re.split(",", line)
                 width = ""
                 local = False
+                reg = False
                 # walk over each of signal/variables declared in this line
                 for init_assign in init_assings:
 
-                    # we expect var = expr or val <= expr
+                    # we expect var = expr
                     try:
                         var, init = re.split(r"\s*\=\s*", init_assign)
                         if var[-1] == "<":
@@ -61,10 +64,14 @@ class FsmConverter:
                                 f"{init_assign}"
                             )
                     except ValueError:
-                        utils.error("missing initial val:", init_assign)
+                        utils.error(
+                            f"'{init_assign}' is missing an initial val. "
+                            f"line {line_no}: {line}"
+                        )
 
                     # flag if this is a declaration
                     if re.search("reg", var):
+                        reg = True
                         var = re.sub(r"reg\s*", "", var)
 
                     # flag if this is a local declaration
@@ -77,6 +84,11 @@ class FsmConverter:
                     width, var = get_width_var(width, var)
 
                     self.reg_track_init[var] = init
+
+                    if not (local or reg):
+                        utils.error(
+                            f"missing local or reg. line {line_no}: {line}"
+                        )
 
                     self.ff_local_decl_in += (
                         f"reg {width}{var}{curr}, {var};\n"

@@ -26,7 +26,8 @@ def parseInputFile(args):
     with open(args.out, "w") as fout:
         state = ParserState.Idle
         line_no = 0
-        line_base = 0
+        line_forever_base = 0
+        line_decl_base = 0
         with open(args.file) as fin:
             line = fin.readline()
             while line:
@@ -37,11 +38,12 @@ def parseInputFile(args):
                         state = ParserState.InSmBegin
                         decl_in = ""
                         inp = ""
+                        line_decl_base = line_no
                     else:
                         print(line, end="", file=fout)
                 elif state == ParserState.InSmBegin:
                     if "SmForever" == lineStr:
-                        line_base = line_no
+                        line_forever_base = line_no
                         state = ParserState.InSmForever
                     else:
                         decl_in += line
@@ -64,8 +66,10 @@ def parseInputFile(args):
                         conv = fsm_converter.FsmConverter(args)
                     else:
                         conv = fsm_converter_rtl.FsmConverterRTL(args)
-                    conv.extract_initial(decl_in)
-                    out = conv.process_block(inp, "", line_base, args.file)
+                    conv.extract_initial(decl_in, line_decl_base)
+                    out = conv.process_block(
+                        inp, "", line_forever_base, args.file
+                    )
                     print(out, file=fout)
                     state = ParserState.Done
 
